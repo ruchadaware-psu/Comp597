@@ -18,20 +18,22 @@ we have to consider the left slant portion for our problem.
 import csv
 
 ## file_name is the file that contains angles for each frame
-with open('fine_name.csv') as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=',')
-    line_count = 0
-    for col in range(6): 
+angleTypes=["right_elbow_angle","right_shoulder_angle","right_wrist_angle","left_elbow_angle","left_shoulder_angle","left_wrist_angle"]
+for col in range(6): 
+    with open('elbow_1.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
         #store [frame, angle] pairs
         list = []
         # find the min and max values
         minAngle=400
         maxAngle=-400
+        line_count = 0
         for row in csv_reader:
             if line_count > 0:
-                list.append([row[1], row[col+2]])
-                minAngle=min(minAngle, row[col+2])
-                maxAngle=max(maxAngle, row[col+2])
+                list.append([float(row[1]), float(row[col+2])])
+                minAngle=min(minAngle, float(row[col+2]))
+                maxAngle=max(maxAngle, float(row[col+2]))
+            line_count=line_count+1
 
         # minAngle=1
         # maxAngle=11
@@ -98,9 +100,9 @@ with open('fine_name.csv') as csv_file:
                 start_right=angle
 
         if(min_left!=400 and min_left_frame!=-1 and max_left!=-400 and max_left_frame!=-1 and start_left!=-1 and start_left_frame!=-1):
-            print(f'\tRequired region starts at coordinate: ({start_left_frame},{start_left}) and ends at ({max_left_frame},{max_left}) while the minimum Angle is at ({min_left_frame, min_left})')
+            print(f'\tRequired region for {angleTypes[col]} starts at coordinate: ({start_left_frame},{start_left}) and ends at ({max_left_frame},{max_left}) while the minimum Angle is at ({min_left_frame, min_left})')
         else: 
-            print(f'\tRequired region starts at coordinate: ({start_right_frame},{start_right}) and ends at ({max_right_frame},{max_right}) while the minimum Angle is at ({min_right_frame, min_right})')
+            print(f'\tRequired region for {angleTypes[col]} starts at coordinate: ({start_right_frame},{start_right}) and ends at ({max_right_frame},{max_right}) while the minimum Angle is at ({min_right_frame, min_right})')
 
 
 
