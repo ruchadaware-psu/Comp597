@@ -20,7 +20,7 @@ import csv
 ## file_name is the file that contains angles for each frame
 angleTypes=["right_elbow_angle","right_shoulder_angle","right_wrist_angle","left_elbow_angle","left_shoulder_angle","left_wrist_angle"]
 for col in range(6): 
-    with open('shoulder_1.csv') as csv_file:
+    with open('elbow_1.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         #store [frame, angle] pairs
         list = []
@@ -125,7 +125,7 @@ for col in range(6):
             if(left_diff-right_diff>=eps): left=True
             else: right=True
 
-        if(amin_left!=400 and amin_left_frame!=-1 and max_left!=-400 and max_left_frame!=-1 and astart_left!=-1 and astart_left_frame!=-1 and left):
+        if((amin_left!=400 and amin_left_frame!=-1 and max_left!=-400 and max_left_frame!=-1 and astart_left!=-1 and astart_left_frame!=-1) or left):
             print(f'\tRequired- region for {angleTypes[col]} starts at coordinate: ({astart_left_frame},{astart_left}) and ends at ({max_left_frame},{max_left}) while the minimum Angle is at ({amin_left_frame, amin_left})')
         else: 
             print(f'\tRequired# region for {angleTypes[col]} starts at coordinate: ({max_right_frame},{max_right}) and ends at ({astart_right_frame},{astart_right}) while the minimum Angle is at ({amin_right_frame, amin_right})')
