@@ -10,9 +10,10 @@ from os import listdir
 from skimage import color
 from skimage import img_as_ubyte
 
-folder_dir = "E:/GRE Jamboree/PENN STATE/Study/Neural Network and Deep Learning/project/data/data_1"
-folder_dir_1 = "E:/GRE Jamboree/PENN STATE/Study/Neural Network and Deep Learning/project/data/data_generated/"
-folder_dir_2 = "E:/GRE Jamboree/PENN STATE/Study/Neural Network and Deep Learning/project/data/data_stored/"
+folder_dir = "E:/GRE Jamboree/PENN STATE/Study/Neural Network and Deep Learning/project/data_preprocessing/data_1"
+folder_dir_1 = "E:/GRE Jamboree/PENN STATE/Study/Neural Network and Deep Learning/project/data_preprocessing/data_generated/"
+folder_dir_2 = "E:/GRE Jamboree/PENN STATE/Study/Neural Network and Deep Learning/project/data_preprocessing/data_stored/"
+folder_dir_3 = "E:/GRE Jamboree/PENN STATE/Study/Neural Network and Deep Learning/project/data_preprocessing/data_generated_rgb/"
 name_of_file=""
 
 
@@ -83,14 +84,15 @@ def graph_create(final_slope):
 
 def feature_extraction(data):
     image=imread(data)
-    image=rgba2rgb(image)
-    image_g=rgb2gray(image)
+    image_g=rgba2rgb(image)
+    #image_g=rgb2gray(image)
     image_l= exposure.adjust_gamma(image_g, 1)
+    image_rescaled = rescale(image_l, 0.2, anti_aliasing=True)
     print(data)
     #edge_sobel = filters.sobel(image_g)
     #edge_sobel_r = rescale(edge_sobel, 0.25, anti_aliasing=True)
-    newtext=data.replace("E:/GRE Jamboree/PENN STATE/Study/Neural Network and Deep Learning/project/data/data_stored/","")
-    imsave(f"{folder_dir_1}{newtext}",img_as_ubyte(image_l))
+    newtext=data.replace("E:/GRE Jamboree/PENN STATE/Study/Neural Network and Deep Learning/project/data_preprocessing/data_stored","")
+    imsave(f"{folder_dir_3}{newtext}",img_as_ubyte(image_rescaled))
 
 def data_generation(name_of_files,dir):
     global name_of_file
